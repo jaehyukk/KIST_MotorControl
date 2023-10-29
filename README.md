@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Simple Open EtherCAT Master Library
 [![Build Status](https://github.com/OpenEtherCATsociety/SOEM/workflows/build/badge.svg?branch=master)](https://github.com/OpenEtherCATsociety/SOEM/actions?workflow=build)
 
@@ -45,3 +46,6 @@ Want to contribute to SOEM or SOES?
 If you want to contribute to SOEM or SOES you will need to sign a Contributor
 License Agreement and send it to us either by e-mail or by physical mail. More
 information is available in the [PDF](http://openethercatsociety.github.io/cla/cla_soem_soes.pdf).
+=======
+# KIST_MotorControl
+>>>>>>> c17c87ca40a2b72347533c98a8bfc9dca565ab61
