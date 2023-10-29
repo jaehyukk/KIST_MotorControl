@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/include/soem/**",
+                "/usr/xenomai/include/**",
+                "/usr/xenomai/include/boilerplate/**",
+                "/usr/xenomai/include/copperplate/**",
+                "/usr/xenomai/include/alchemy/**",
+                "/home/robot/sources/xenomai-v3.1.2/lib/**"
+                
+            
+                
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

@@ -3,7 +3,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modu
 project(SOEM
     DESCRIPTION "Simple Open EtherCAT Master"
     VERSION 1.4.0
-    LANGUAGES C)
+    LANGUAGES C CXX)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   # Default to installing in SOEM source directory
@@ -34,7 +34,21 @@ if(WIN32)
 elseif(UNIX AND NOT APPLE)
   set(OS "linux")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
-  set(OS_LIBS pthread rt)
+  set(OS_LIBS pthread rt modechk cobalt alchemy copperplate)
+execute_process(COMMAND xeno-config --posix --cflags OUTPUT_VARIABLE XENO_CFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND xeno-config --posix --ldflags OUTPUT_VARIABLE XENO_LDFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${XENO_CFLAGS}")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${XENO_LDFLAGS}")
+  set(CMAKE_C_COMPILER gcc)
+  
+  	include_directories(
+	/usr/xenomai/include
+	/usr/xenomai/include/cobalt
+	/usr/xenomai/include/alchemy
+	)
+	link_directories(/usr/xenomai/lib)  
+  
+  
 elseif(APPLE)
   # This must come *before* linux or MacOSX will identify as Unix.
   set(OS "macosx")
@@ -62,6 +76,7 @@ endif()
 message(STATUS "OS is ${OS}")
 
 file(GLOB SOEM_SOURCES soem/*.c)
+file(GLOB SOEM_SOURCES1 soem/*.cpp)
 file(GLOB OSAL_SOURCES osal/${OS}/*.c)
 file(GLOB OSHW_SOURCES oshw/${OS}/*.c)
 
@@ -71,6 +86,7 @@ file(GLOB OSHW_HEADERS oshw/${OS}/*.h)
 
 add_library(soem STATIC
   ${SOEM_SOURCES}
+  ${SOEM_SOURCES1}
   ${OSAL_SOURCES}
   ${OSHW_SOURCES}
   ${OSHW_EXTRA_SOURCES})
@@ -110,4 +126,9 @@ if(BUILD_TESTS)
   add_subdirectory(test/linux/slaveinfo)
   add_subdirectory(test/linux/eepromtool)
   add_subdirectory(test/linux/simple_test)
+  add_subdirectory(test/linux/shm)
+  add_subdirectory(test/linux/main)
+  add_subdirectory(test/linux/mtchkpa)
+    
+  
 endif()
